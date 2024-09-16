@@ -18,6 +18,10 @@
         // Collection de héros participants
         public ICollection<SuperHeroModel> Heroes { get; set; }
 
+        // Dates de début et de fin de la mission
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
         public MissionModel()
         {
             PK_Mission = Guid.NewGuid();
@@ -25,7 +29,7 @@
             Heroes = new List<SuperHeroModel>();
         }
 
-        public MissionModel(Guid pK_Mission, DateTime creation, string type, string title, string? moreInfo, string? travel, string severity, string emergency, IncidentModel? incident = null, ICollection<SuperHeroModel>? heroes = null)
+        public MissionModel(Guid pK_Mission, DateTime creation, string type, string title, string? moreInfo, string? travel, string severity, string emergency, DateTime startDate, DateTime endDate, IncidentModel? incident = null, ICollection<SuperHeroModel>? heroes = null)
         {
             PK_Mission = pK_Mission;
             Creation = creation;
@@ -35,6 +39,8 @@
             Travel = travel;
             Severity = severity;
             Emergency = emergency;
+            StartDate = startDate;
+            EndDate = endDate;
             Incident = incident;
             FK_Incident = incident?.IncidentId;
             Heroes = heroes ?? new List<SuperHeroModel>();
