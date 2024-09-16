@@ -17,10 +17,16 @@
         public ICollection<CivilModel> Members { get; set; }
         public ICollection<CivilModel> Dirigeant { get; set; }
 
+        // Collections pour les héros et les vilains
+        public ICollection<SuperHeroModel> Heroes { get; set; }
+        public ICollection<SuperVillainModel> Villains { get; set; }
+
         public OrgaModel()
         {
             Members = new List<CivilModel>();
             Dirigeant = new List<CivilModel>();
+            Heroes = new List<SuperHeroModel>();
+            Villains = new List<SuperVillainModel>();
         }
 
         public OrgaModel(DateTime lastUpdate,
@@ -39,6 +45,8 @@
             Nb_Incident_Declared = 0;
             Members = new List<CivilModel>();
             Dirigeant = new List<CivilModel>();
+            Heroes = new List<SuperHeroModel>();
+            Villains = new List<SuperVillainModel>();
         }
     }
 }
