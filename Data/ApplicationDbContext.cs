@@ -11,6 +11,7 @@ namespace C_Hero.Data
         public DbSet<SuperHeroModel> SuperHeroes { get; set; }
         public DbSet<SuperVillainModel> SuperVillains { get; set; }
         public DbSet<IncidentModel> Incidents { get; set; }
+        public DbSet<MissionModel> Missions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +71,19 @@ namespace C_Hero.Data
                 .HasMany(i => i.Villains)
                 .WithMany()
                 .UsingEntity(j => j.ToTable("IncidentVillains"));
+
+            // Configuration pour MissionModel
+            modelBuilder.Entity<MissionModel>()
+                .HasOne(m => m.Incident)
+                .WithMany()
+                .HasForeignKey(m => m.FK_Incident)
+                .IsRequired(false);
+
+            // Configuration de la relation many-to-many pour Heroes dans MissionModel
+            modelBuilder.Entity<MissionModel>()
+                .HasMany(m => m.Heroes)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("MissionHeroes"));
         }
     }
 }
