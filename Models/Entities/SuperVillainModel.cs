@@ -10,7 +10,7 @@ namespace C_Hero.Models.Entities
         public string? Weakness { get; set; }
         public string? Picture { get; set; }
         public string? Comment { get; set; }
-        public int Nb_Incident_Solved { get; set; }
+        public int Nb_Incident_Caused { get; set; }
         public int Score { get; set; }
 
         // Propriété pour l'identité secrète
@@ -21,7 +21,7 @@ namespace C_Hero.Models.Entities
         public SuperVillainModel()
         {
             PK_SuperV = Guid.NewGuid();
-            Nb_Incident_Solved = 0;
+            Nb_Incident_Caused= 0;
             Score = 0;
         }
 
@@ -34,7 +34,7 @@ namespace C_Hero.Models.Entities
             Weakness = weakness;
             Picture = picture;
             Comment = comment;
-            Nb_Incident_Solved = 0;
+            Nb_Incident_Caused = 0;
             Score = 0;
             Identity = secretIdentity;
             IdentityId = secretIdentity?.PK_Civil;

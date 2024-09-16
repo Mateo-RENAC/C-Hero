@@ -10,6 +10,7 @@ namespace C_Hero.Data
         public DbSet<OrgaModel> Orgas { get; set; }
         public DbSet<SuperHeroModel> SuperHeroes { get; set; }
         public DbSet<SuperVillainModel> SuperVillains { get; set; }
+        public DbSet<IncidentModel> Incidents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,25 @@ namespace C_Hero.Data
                 .HasMany(o => o.Villains)
                 .WithMany()
                 .UsingEntity(j => j.ToTable("OrgaVillains"));
+
+            // Configuration pour IncidentModel
+            modelBuilder.Entity<IncidentModel>()
+                .HasOne(i => i.Orga_Decleare)
+                .WithMany()
+                .HasForeignKey(i => i.Orga_DecleareId)
+                .IsRequired(false);
+
+            modelBuilder.Entity<IncidentModel>()
+                .HasOne(i => i.Civil_Decleare)
+                .WithMany()
+                .HasForeignKey(i => i.Civil_DecleareId)
+                .IsRequired(false);
+
+            // Configuration de la relation many-to-many pour Villains dans IncidentModel
+            modelBuilder.Entity<IncidentModel>()
+                .HasMany(i => i.Villains)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("IncidentVillains"));
         }
     }
 }
