@@ -18,38 +18,13 @@
         public string? Picture { get; set; }
         public int Nb_Incident_Declared { get; set; }
         public int Nb_Time_Being_Victim { get; set; }
-
-        // Collection pour la relation Many-to-Many
         public ICollection<OrgaModel> Orgas { get; set; }
+        public ICollection<OrgaModel> DirigeantOrgas { get; set; }
 
         public CivilModel()
         {
             Orgas = new List<OrgaModel>();
-        }
-
-        public CivilModel(DateTime lastUpdate,
-            DateTime birthDate, DateTime? deathDate,
-            string firstName, string lastName,
-            string civility, string? address,
-            string? cellPhone, string? email,
-            string? nationality, string? picture)
-        {
-            PK_Civil = Guid.NewGuid();
-            Creation = DateTime.Now;
-            LastUpdate = Creation;
-            BirthDate = birthDate;
-            DeathDate = deathDate;
-            FirstName = firstName;
-            LastName = lastName;
-            Civility = civility;
-            Address = address;
-            CellPhone = cellPhone;
-            Email = email;
-            Nationality = nationality;
-            Picture = picture;
-            Nb_Incident_Declared = 0;
-            Nb_Time_Being_Victim = 0;
-            Orgas = new List<OrgaModel>();
+            DirigeantOrgas = new List<OrgaModel>();
         }
     }
 }

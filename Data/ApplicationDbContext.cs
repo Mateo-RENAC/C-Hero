@@ -6,6 +6,11 @@ namespace C_Hero.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<CivilModel> Civils { get; set; }
         public DbSet<OrgaModel> Orgas { get; set; }
         public DbSet<SuperHeroModel> SuperHeroes { get; set; }
@@ -15,75 +20,37 @@ namespace C_Hero.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuration de la relation many-to-many pour Members
-            modelBuilder.Entity<CivilModel>()
-                .HasMany(c => c.Orgas)
-                .WithMany(o => o.Members)
-                .UsingEntity(j => j.ToTable("CivilOrgaMembers"));
+            base.OnModelCreating(modelBuilder);
 
             // Configuration de la relation many-to-many pour Dirigeant
-            modelBuilder.Entity<CivilModel>()
-                .HasMany(c => c.Orgas)
-                .WithMany(o => o.Dirigeant)
-                .UsingEntity(j => j.ToTable("CivilOrgaDirigeant"));
+            modelBuilder.Entity<OrgaModel>()
+                .HasMany(o => o.Dirigeant)
+                .WithMany(c => c.DirigeantOrgas)
+                .UsingEntity(j => j.ToTable("OrgaDirigeants"));
 
-            // Configuration pour SuperHeroModel
-            modelBuilder.Entity<SuperHeroModel>()
-                .HasOne(sh => sh.SecretIdentity)
-                .WithMany()
-                .HasForeignKey(sh => sh.SecretIdentityId)
-                .IsRequired(false);
-
-            // Configuration pour SuperVillainModel
-            modelBuilder.Entity<SuperVillainModel>()
-                .HasOne(sv => sv.Identity)
-                .WithMany()
-                .HasForeignKey(sv => sv.IdentityId)
-                .IsRequired(false);
+            // Configuration de la relation many-to-many pour Members
+            modelBuilder.Entity<OrgaModel>()
+                .HasMany(o => o.Members)
+                .WithMany(c => c.Orgas)
+                .UsingEntity(j => j.ToTable("OrgaMembers"));
 
             // Configuration de la relation many-to-many pour Heroes
             modelBuilder.Entity<OrgaModel>()
                 .HasMany(o => o.Heroes)
-                .WithMany()
+                .WithMany(h => h.Orga)
                 .UsingEntity(j => j.ToTable("OrgaHeroes"));
 
             // Configuration de la relation many-to-many pour Villains
             modelBuilder.Entity<OrgaModel>()
                 .HasMany(o => o.Villains)
-                .WithMany()
+                .WithMany(v => v.Orga)
                 .UsingEntity(j => j.ToTable("OrgaVillains"));
-
-            // Configuration pour IncidentModel
-            modelBuilder.Entity<IncidentModel>()
-                .HasOne(i => i.Orga_Decleare)
-                .WithMany()
-                .HasForeignKey(i => i.Orga_DecleareId)
-                .IsRequired(false);
-
-            modelBuilder.Entity<IncidentModel>()
-                .HasOne(i => i.Civil_Decleare)
-                .WithMany()
-                .HasForeignKey(i => i.Civil_DecleareId)
-                .IsRequired(false);
 
             // Configuration de la relation many-to-many pour Villains dans IncidentModel
             modelBuilder.Entity<IncidentModel>()
                 .HasMany(i => i.Villains)
-                .WithMany()
+                .WithMany(v => v.Incidents)
                 .UsingEntity(j => j.ToTable("IncidentVillains"));
-
-            // Configuration pour MissionModel
-            modelBuilder.Entity<MissionModel>()
-                .HasOne(m => m.Incident)
-                .WithMany()
-                .HasForeignKey(m => m.FK_Incident)
-                .IsRequired(false);
-
-            // Configuration de la relation many-to-many pour Heroes dans MissionModel
-            modelBuilder.Entity<MissionModel>()
-                .HasMany(m => m.Heroes)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("MissionHeroes"));
         }
     }
 }
