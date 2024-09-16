@@ -19,8 +19,12 @@
         public int Nb_Incident_Declared { get; set; }
         public int Nb_Time_Being_Victim { get; set; }
 
+        // Collection pour la relation Many-to-Many
+        public ICollection<OrgaModel> Orgas { get; set; }
+
         public CivilModel()
         {
+            Orgas = new List<OrgaModel>();
         }
 
         public CivilModel(DateTime lastUpdate,
@@ -45,6 +49,7 @@
             Picture = picture;
             Nb_Incident_Declared = 0;
             Nb_Time_Being_Victim = 0;
+            Orgas = new List<OrgaModel>();
         }
     }
 }
