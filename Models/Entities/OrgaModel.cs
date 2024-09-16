@@ -19,6 +19,7 @@
 
         public OrgaModel()
         {
+            Name = string.Empty;
             Members = new List<CivilModel>();
             Dirigeant = new List<CivilModel>();
             Heroes = new List<SuperHeroModel>();

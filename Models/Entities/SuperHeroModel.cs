@@ -17,6 +17,9 @@ namespace C_Hero.Models.Entities
         public Guid? SecretIdentityId { get; set; }
         public CivilModel? SecretIdentity { get; set; }
 
+        //Propriété pour la relation avec OrgaModel
+        public ICollection<OrgaModel> Orgas { get; set; } = new List<OrgaModel>();
+
         // Constructeur par défaut
         public SuperHeroModel()
         {
