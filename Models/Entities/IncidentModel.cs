@@ -24,11 +24,10 @@
             IncidentId = Guid.NewGuid();
             Creation = DateTime.Now;
             Localization = string.Empty; // Valeur par défaut pour éviter les erreurs de nullabilité
-            Description = string.Empty;  // Valeur par défaut pour éviter les erreurs de nullabilité
+            Description = string.Empty;  
             Villains = new List<SuperVillainModel>();
         }
 
-        // Constructeur paramétré
         public IncidentModel(string localization, string description, string? comment = null, OrgaModel? orgaDecleare = null, CivilModel? civilDecleare = null, ICollection<SuperVillainModel>? villains = null)
         {
             IncidentId = Guid.NewGuid();

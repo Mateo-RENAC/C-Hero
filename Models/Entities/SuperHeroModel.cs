@@ -27,8 +27,6 @@ namespace C_Hero.Models.Entities
             Nb_Incident_Solved = 0;
             Score = 0;
         }
-
-        // Constructeur paramétré
         public SuperHeroModel(string? name, string? power, string? weakness, string? picture, string? comment, CivilModel? secretIdentity = null)
         {
             PK_SuperH = Guid.NewGuid();

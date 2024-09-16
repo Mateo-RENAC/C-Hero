@@ -58,8 +58,6 @@ namespace C_Hero.Data
             modelBuilder.Entity<DisputeModel>()
                 .HasKey(d => d.PK_Dispute);
 
-            //
-
             // Configuration de la relation many-to-many pour Dirigeant
             modelBuilder.Entity<OrgaModel>()
                 .HasMany(o => o.Dirigeant)
