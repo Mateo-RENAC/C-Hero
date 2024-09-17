@@ -19,7 +19,7 @@ namespace C_Hero.Services
 
         public async Task<IEnumerable<RapportModel>> GetAllRapportsAsync()
         {
-            return await _context.Rapports
+            return await _context.Set<RapportModel>()
                 .Include(r => r.Civil)
                 .Include(r => r.Orga)
                 .Include(r => r.SuperHero)
@@ -30,7 +30,7 @@ namespace C_Hero.Services
 
         public async Task<RapportModel> GetRapportByIdAsync(Guid id)
         {
-            return await _context.Rapports
+            return await _context.Set<RapportModel>()
                 .Include(r => r.Civil)
                 .Include(r => r.Orga)
                 .Include(r => r.SuperHero)
@@ -41,7 +41,7 @@ namespace C_Hero.Services
 
         public async Task<RapportModel> CreateRapportAsync(RapportModel rapportModel)
         {
-            _context.Rapports.Add(rapportModel);
+            _context.Set<RapportModel>().Add(rapportModel);
             await _context.SaveChangesAsync();
             return rapportModel;
         }
@@ -54,10 +54,10 @@ namespace C_Hero.Services
 
         public async Task DeleteRapportAsync(Guid id)
         {
-            var rapportModel = await _context.Rapports.FindAsync(id);
+            var rapportModel = await _context.Set<RapportModel>().FindAsync(id);
             if (rapportModel != null)
             {
-                _context.Rapports.Remove(rapportModel);
+                _context.Set<RapportModel>().Remove(rapportModel);
                 await _context.SaveChangesAsync();
             }
         }

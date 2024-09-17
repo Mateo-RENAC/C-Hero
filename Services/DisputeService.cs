@@ -19,7 +19,7 @@ namespace C_Hero.Services
 
         public async Task<IEnumerable<DisputeModel>> GetAllDisputesAsync()
         {
-            return await _context.Disputes
+            return await _context.Set<DisputeModel>()
                 .Include(d => d.Orga)
                 .Include(d => d.Civil)
                 .ToListAsync();
@@ -27,7 +27,7 @@ namespace C_Hero.Services
 
         public async Task<DisputeModel> GetDisputeByIdAsync(Guid id)
         {
-            return await _context.Disputes
+            return await _context.Set<DisputeModel>()
                 .Include(d => d.Orga)
                 .Include(d => d.Civil)
                 .FirstOrDefaultAsync(d => d.PK_Dispute == id);
@@ -35,7 +35,7 @@ namespace C_Hero.Services
 
         public async Task<DisputeModel> CreateDisputeAsync(DisputeModel disputeModel)
         {
-            _context.Disputes.Add(disputeModel);
+            _context.Set<DisputeModel>().Add(disputeModel);
             await _context.SaveChangesAsync();
             return disputeModel;
         }
@@ -48,10 +48,10 @@ namespace C_Hero.Services
 
         public async Task DeleteDisputeAsync(Guid id)
         {
-            var disputeModel = await _context.Disputes.FindAsync(id);
+            var disputeModel = await _context.Set<DisputeModel>().FindAsync(id);
             if (disputeModel != null)
             {
-                _context.Disputes.Remove(disputeModel);
+                _context.Set<DisputeModel>().Remove(disputeModel);
                 await _context.SaveChangesAsync();
             }
         }

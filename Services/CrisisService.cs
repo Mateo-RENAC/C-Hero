@@ -19,7 +19,7 @@ namespace C_Hero.Services
 
         public async Task<IEnumerable<CrisisModel>> GetAllCrisesAsync()
         {
-            return await _context.Crises
+            return await _context.Set<CrisisModel>()
                 .Include(c => c.Dispute)
                 .Include(c => c.Rapports)
                 .ToListAsync();
@@ -27,7 +27,7 @@ namespace C_Hero.Services
 
         public async Task<CrisisModel> GetCrisisByIdAsync(Guid id)
         {
-            return await _context.Crises
+            return await _context.Set<CrisisModel>()
                 .Include(c => c.Dispute)
                 .Include(c => c.Rapports)
                 .FirstOrDefaultAsync(c => c.PK_Crisis == id);
@@ -35,7 +35,7 @@ namespace C_Hero.Services
 
         public async Task<CrisisModel> CreateCrisisAsync(CrisisModel crisisModel)
         {
-            _context.Crises.Add(crisisModel);
+            _context.Set<CrisisModel>().Add(crisisModel);
             await _context.SaveChangesAsync();
             return crisisModel;
         }
@@ -48,10 +48,10 @@ namespace C_Hero.Services
 
         public async Task DeleteCrisisAsync(Guid id)
         {
-            var crisisModel = await _context.Crises.FindAsync(id);
+            var crisisModel = await _context.Set<CrisisModel>().FindAsync(id);
             if (crisisModel != null)
             {
-                _context.Crises.Remove(crisisModel);
+                _context.Set<CrisisModel>().Remove(crisisModel);
                 await _context.SaveChangesAsync();
             }
         }
