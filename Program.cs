@@ -23,7 +23,9 @@ builder.Services.AddScoped<ISuperHeroService, SuperHeroService>();
 builder.Services.AddScoped<ISuperVillainService, SuperVillainService>();
 builder.Services.AddScoped<IIncidentService, IncidentService>();
 builder.Services.AddScoped<IMissionService, MissionService>();
-
+builder.Services.AddScoped<ICrisisService, CrisisService>();
+builder.Services.AddScoped<IDisputeService, DisputeService>();
+builder.Services.AddScoped<IRapportService, RapportService>();
 
 var app = builder.Build();
 
