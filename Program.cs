@@ -2,6 +2,7 @@ using C_Hero.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using C_Hero.Models.Entities;
+using C_Hero.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,14 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+// Register services
+builder.Services.AddScoped<ICivilService, CivilService>();
+builder.Services.AddScoped<IOrgaService, OrgaService>();
+
+
+
 
 var app = builder.Build();
 
