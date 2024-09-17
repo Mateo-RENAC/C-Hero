@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<C_Hero.Models.Entities.IncidentModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date de Création</th>
+            <th>Lieu</th>
+            <th>Description</th>
+            <th>Commentaire</th>
+            <th>Organisation Déclarant</th>
+            <th>Civil Déclarant</th>
+            <th>Vilains Impliqués</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var incident in Model)
+        {
+            <tr>
+                <td>@incident.Creation.ToString("dd/MM/yyyy")</td>
+                <td>@incident.Localization</td>
+                <td>@incident.Description</td>
+                <td>@incident.Comment</td>
+                <td>@incident.Orga_Decleare?.Name</td>
+                <td>@incident.Civil_Decleare?.FirstName @incident.Civil_Decleare?.LastName</td>
+                <td>
+                    @if (incident.Villains != null && incident.Villains.Any())
+                    {
+                        @foreach (var villain in incident.Villains)
+                        {
+                            <p>@villain.Name</p>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using C_Hero.Services;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace C_Hero.Controllers
 {
@@ -62,7 +63,7 @@ namespace C_Hero.Controllers
                     return PartialView("SuperHeroesPartial", superHeroes);
                 case "Crises":
                     var crises = await _crisisService.GetAllCrisesAsync();
-                    return PartialView("CrisesPartial", crises);
+                    return PartialView("CrisisPartial", crises);
                 case "Incidents":
                     var incidents = await _incidentService.GetAllIncidentsAsync();
                     return PartialView("IncidentsPartial", incidents);

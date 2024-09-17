@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<!-- /Views/Shared/CrisesPartial.cshtml -->
+@model IEnumerable<C_Hero.Models.Entities.CrisisModel>
+
+<div>
+    <h2>Liste des Crises</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Date de Création</th>
+                <th>Commentaire</th>
+                <th>Dispute Associée</th>
+                <th>Nombre de Rapports</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var crisis in Model)
+            {
+                <tr>
+                    <td>@crisis.Type</td>
+                    <td>@crisis.Creation.ToString("dd/MM/yyyy")</td>
+                    <td>@crisis.Comment</td>
+                    <td>@crisis.Dispute?.Type</td>
+                    <td>@crisis.Rapports.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

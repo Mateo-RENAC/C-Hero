@@ -1,5 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<C_Hero.Models.Entities.RapportModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date de Création</th>
+            <th>Commentaire</th>
+            <th>Nombre de Victimes</th>
+            <th>Civil</th>
+            <th>Organisation</th>
+            <th>Super Héros</th>
+            <th>Mission</th>
+            <th>Crises</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rapport in Model)
+        {
+            <tr>
+                <td>@rapport.Creation.ToString("dd/MM/yyyy")</td>
+                <td>@rapport.Comment</td>
+                <td>@rapport.Nb_Victim</td>
+                <td>@rapport.Civil?.FirstName @rapport.Civil?.LastName</td>
+                <td>@rapport.Orga?.Name</td>
+                <td>@rapport.SuperHero?.Name</td>
+                <td>@rapport.Mission?.Title</td>
+                <td>
+                    @if (rapport.Crises != null && rapport.Crises.Any())
+                    {
+                        @foreach (var crisis in rapport.Crises)
+                        {
+                            <p>@crisis.Type</p>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

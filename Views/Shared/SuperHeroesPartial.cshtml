@@ -1,5 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<C_Hero.Models.Entities.SuperHeroModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Pouvoir</th>
+            <th>Faiblesse</th>
+            <th>Image</th>
+            <th>Commentaires</th>
+            <th>Nombre d'incidents résolus</th>
+            <th>Score</th>
+            <th>Identité Secrète</th>
+            <th>Organisations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hero in Model)
+        {
+            <tr>
+                <td>@hero.Name</td>
+                <td>@hero.Power</td>
+                <td>@hero.Weakness</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(hero.Picture))
+                    {
+                        <img src="@hero.Picture" alt="Image de @hero.Name" width="50" height="50" />
+                    }
+                </td>
+                <td>@hero.Comment</td>
+                <td>@hero.Nb_Incident_Solved</td>
+                <td>@hero.Score</td>
+                <td>@hero.SecretIdentity?.FirstName @hero.SecretIdentity?.LastName</td>
+                <td>
+                    @foreach (var orga in hero.Orgas)
+                    {
+                        <p>@orga.Name</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

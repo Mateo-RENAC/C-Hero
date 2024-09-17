@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<C_Hero.Models.Entities.DisputeModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date de Création</th>
+            <th>Type</th>
+            <th>Commentaire</th>
+            <th>Coût</th>
+            <th>Photos</th>
+            <th>Organisation</th>
+            <th>Civil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dispute in Model)
+        {
+            <tr>
+                <td>@dispute.Creation.ToString("dd/MM/yyyy")</td>
+                <td>@dispute.Type</td>
+                <td>@dispute.Comment</td>
+                <td>@dispute.Cost?.ToString("C")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(dispute.Photos))
+                    {
+                        <img src="@dispute.Photos" alt="Photo de la dispute" width="50" height="50" />
+                    }
+                </td>
+                <td>@dispute.Orga?.Name</td>
+                <td>@dispute.Civil?.FirstName @dispute.Civil?.LastName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

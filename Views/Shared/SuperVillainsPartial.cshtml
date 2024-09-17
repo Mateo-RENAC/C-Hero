@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<C_Hero.Models.Entities.SuperVillainModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Pouvoir</th>
+            <th>Faiblesse</th>
+            <th>Image</th>
+            <th>Commentaires</th>
+            <th>Nombre d'incidents causés</th>
+            <th>Score</th>
+            <th>Identité</th>
+            <th>Organisations</th>
+            <th>Incidents</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var villain in Model)
+        {
+            <tr>
+                <td>@villain.Name</td>
+                <td>@villain.Power</td>
+                <td>@villain.Weakness</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(villain.Picture))
+                    {
+                        <img src="@villain.Picture" alt="Image de @villain.Name" width="50" height="50" />
+                    }
+                </td>
+                <td>@villain.Comment</td>
+                <td>@villain.Nb_Incident_Caused</td>
+                <td>@villain.Score</td>
+                <td>@villain.Identity?.FirstName @villain.Identity?.LastName</td>
+                <td>
+                    @foreach (var orga in villain.Orgas)
+                    {
+                        <p>@orga.Name</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var incident in villain.Incidents)
+                    {
+                        <p>@incident.Description</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

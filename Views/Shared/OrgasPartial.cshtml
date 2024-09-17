@@ -1,5 +1,63 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+@model IEnumerable<C_Hero.Models.Entities.OrgaModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Siège Social</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Commentaires</th>
+            <th>Image</th>
+            <th>Nombre d'incidents déclarés</th>
+            <th>Membres</th>
+            <th>Dirigeants</th>
+            <th>Héros</th>
+            <th>Vilains</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orga in Model)
+        {
+            <tr>
+                <td>@orga.Name</td>
+                <td>@orga.Social_Siege</td>
+                <td>@orga.Phone</td>
+                <td>@orga.Email</td>
+                <td>@orga.Comment</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(orga.Picture))
+                    {
+                        <img src="@orga.Picture" alt="Image de @orga.Name" width="50" height="50" />
+                    }
+                </td>
+                <td>@orga.Nb_Incident_Declared</td>
+                <td>
+                    @foreach (var member in orga.Members)
+                    {
+                        <p>@member.FirstName @member.LastName</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var dirigeant in orga.Dirigeant)
+                    {
+                        <p>@dirigeant.FirstName @dirigeant.LastName</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var hero in orga.Heroes)
+                    {
+                        <p>@hero.Name</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var villain in orga.Villains)
+                    {
+                        <p>@villain.Name</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
