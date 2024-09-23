@@ -189,22 +189,26 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> CreateCrisis()
-        {
-            ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
-            return View("CreateCrisis");
-        }
-
         [HttpPost]
-        public async Task<IActionResult> CreateCrisis(CrisisModel model)
+        public async Task<IActionResult> CreateCrisis(CrisisModel model, List<Guid> Rapports)
         {
             if (ModelState.IsValid)
             {
+                model.Rapports = new List<RapportModel>();
+                foreach (var rapportId in Rapports)
+                {
+                    var rapport = await _rapportService.GetRapportByIdAsync(rapportId);
+                    if (rapport != null)
+                    {
+                        model.Rapports.Add(rapport);
+                    }
+                }
                 await _crisisService.CreateCrisisAsync(model);
                 return RedirectToAction("Index");
             }
             // Recharger les listes en cas d'erreur de validation
             ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
+            ViewBag.Rapports = await _rapportService.GetAllRapportsAsync();
             return View(model);
         }
     }
