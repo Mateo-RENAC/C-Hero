@@ -106,6 +106,10 @@ namespace C_Hero.Controllers
                     ViewBag.Civils = await _civilService.GetAllCivilsAsync();
                     ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
                     return View("CreateSuperHero");
+                case "Crises":
+                    ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
+                    ViewBag.Rapports = await _rapportService.GetAllRapportsAsync();
+                    return View("CreateCrisis");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
                     return Content("Table inconnue");
@@ -182,6 +186,25 @@ namespace C_Hero.Controllers
             // Recharger les listes en cas d'erreur de validation
             ViewBag.Civils = await _civilService.GetAllCivilsAsync();
             ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
+            return View(model);
+        }
+
+        public async Task<IActionResult> CreateCrisis()
+        {
+            ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
+            return View("CreateCrisis");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCrisis(CrisisModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _crisisService.CreateCrisisAsync(model);
+                return RedirectToAction("Index");
+            }
+            // Recharger les listes en cas d'erreur de validation
+            ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
             return View(model);
         }
     }
