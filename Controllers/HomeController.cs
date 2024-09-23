@@ -110,6 +110,8 @@ namespace C_Hero.Controllers
                     ViewBag.Disputes = await _disputeService.GetAllDisputesAsync();
                     ViewBag.Rapports = await _rapportService.GetAllRapportsAsync();
                     return View("CreateCrisis");
+                case "Civils":
+                    return View("CreateCivil");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
                     return Content("Table inconnue");
@@ -211,5 +213,19 @@ namespace C_Hero.Controllers
             ViewBag.Rapports = await _rapportService.GetAllRapportsAsync();
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCivil(CivilModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _civilService.CreateCivilAsync(model);
+                return RedirectToAction("Index");
+            }
+            // Recharger les données nécessaires pour le formulaire en cas d'erreur de validation
+            return View(model);
+        }
+
+
     }
 }
