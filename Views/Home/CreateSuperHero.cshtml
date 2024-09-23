@@ -1,0 +1,68 @@
+﻿@model C_Hero.Models.Entities.SuperHeroModel
+
+@{
+    ViewData["Title"] = "Créer un Super-Héros";
+}
+
+<h2>Créer un Super-Héros</h2>
+
+<form asp-action="CreateSuperHero" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Power" class="control-label"></label>
+        <input asp-for="Power" class="form-control" />
+        <span asp-validation-for="Power" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Weakness" class="control-label"></label>
+        <input asp-for="Weakness" class="form-control" />
+        <span asp-validation-for="Weakness" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Picture" class="control-label"></label>
+        <input asp-for="Picture" class="form-control" />
+        <span asp-validation-for="Picture" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment" class="control-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Nb_Incident_Solved" class="control-label"></label>
+        <input asp-for="Nb_Incident_Solved" class="form-control" />
+        <span asp-validation-for="Nb_Incident_Solved" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Score" class="control-label"></label>
+        <input asp-for="Score" class="form-control" />
+        <span asp-validation-for="Score" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SecretIdentityId" class="control-label"></label>
+        <select asp-for="SecretIdentityId" class="form-control" asp-items="@(new SelectList(ViewBag.Civils, "PK_Civil", "FirstName"))">
+            <option value="">Sélectionnez une identité secrète</option>
+        </select>
+        <span asp-validation-for="SecretIdentityId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Orgas" class="control-label"></label>
+        <select asp-for="Orgas" class="form-control" asp-items="@(new SelectList(ViewBag.Orgas, "PK_Orga", "Name"))">
+            <option value="">Sélectionner une organisation</option>
+        </select>
+        <span asp-validation-for="Orgas" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Créer" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
