@@ -1,0 +1,59 @@
+﻿@model C_Hero.Models.Entities.RapportModel
+
+@{
+    ViewData["Title"] = "Créer un Rapport";
+}
+
+<h2>Créer un Rapport</h2>
+
+<form asp-action="CreateRapport" method="post">
+    <div class="form-group">
+        <label asp-for="Creation" class="control-label"></label>
+        <input asp-for="Creation" class="form-control" />
+        <span asp-validation-for="Creation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment" class="control-label"></label>
+        <input asp-for="Comment" class="form-control" />
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Nb_Victim" class="control-label"></label>
+        <input asp-for="Nb_Victim" class="form-control" />
+        <span asp-validation-for="Nb_Victim" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FK_Civil" class="control-label">Civil</label>
+        <select asp-for="FK_Civil" class="form-control" asp-items="@(new SelectList(ViewBag.Civils, "PK_Civil", "FirstName"))"></select>
+        <span asp-validation-for="FK_Civil" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FK_Orga" class="control-label">Organisation</label>
+        <select asp-for="FK_Orga" class="form-control" asp-items="@(new SelectList(ViewBag.Organisations, "PK_Orga", "Name"))"></select>
+        <span asp-validation-for="FK_Orga" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FK_SuperH" class="control-label">Super Héros</label>
+        <select asp-for="FK_SuperH" class="form-control" asp-items="@(new SelectList(ViewBag.SuperHeroes, "PK_SuperH", "Name"))"></select>
+        <span asp-validation-for="FK_SuperH" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FK_Mission" class="control-label">Mission</label>
+        <select asp-for="FK_Mission" class="form-control" asp-items="@(new SelectList(ViewBag.Missions, "PK_Mission", "Title"))"></select>
+        <span asp-validation-for="FK_Mission" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Crises" class="control-label">Crises</label>
+        <select asp-for="Crises" class="form-control" asp-items="@(new SelectList(ViewBag.Crises, "PK_Crisis", "Type"))" multiple="multiple"></select>
+        <span asp-validation-for="Crises" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Créer" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

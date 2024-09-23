@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using C_Hero.Services;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using C_Hero.Models.Entities;
 
 namespace C_Hero.Controllers
 {
@@ -75,5 +76,38 @@ namespace C_Hero.Controllers
                     return BadRequest("Table inconnue");
             }
         }
+
+        public async Task<IActionResult> Create(string table)
+        {
+            switch (table)
+            {
+                case "Rapports":
+                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+                    ViewBag.Missions = await _missionService.GetAllMissionsAsync();
+                    ViewBag.Crises = await _crisisService.GetAllCrisesAsync();
+                    return View("CreateRapport");
+                // Ajoutez d'autres cas pour les autres tables
+                default:
+                    return Content("Table inconnue");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRapport(RapportModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _rapportService.CreateRapportAsync(model);
+                return RedirectToAction("Index");
+            }
+            // Recharger les listes en cas d'erreur de validation
+            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+            ViewBag.Missions = await _missionService.GetAllMissionsAsync();
+            ViewBag.Crises = await _crisisService.GetAllCrisesAsync();
+            return View(model);
+        }
+
     }
 }

@@ -5,6 +5,10 @@
 <h2>Accueil</h2>
 
 <div>
+    <button id="createButton" onclick="createEntry()">Create</button>
+</div>
+
+<div>
     <label for="tableSelect">Choisissez une table :</label>
     <select id="tableSelect" onchange="loadTable()">
         <option value="Rapports">Rapports</option>
@@ -33,6 +37,11 @@
                 .then(html => {
                     document.getElementById("tableContainer").innerHTML = html;
                 });
+        }
+
+        function createEntry() {
+            var selectedTable = document.getElementById("tableSelect").value;
+            window.location.href = '/Home/Create?table=' + selectedTable;
         }
 
         // Charger la table par défaut

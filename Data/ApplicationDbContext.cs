@@ -17,6 +17,11 @@ namespace C_Hero.Data
         public DbSet<SuperVillainModel> SuperVillains { get; set; }
         public DbSet<IncidentModel> Incidents { get; set; }
         public DbSet<MissionModel> Missions { get; set; }
+        public DbSet<RapportModel> Rapports { get; set; }
+        public DbSet<CrisisModel> Crisises { get; set; }
+        public DbSet<DisputeModel> Disputes { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
