@@ -112,6 +112,9 @@ namespace C_Hero.Controllers
                     return View("CreateCrisis");
                 case "Civils":
                     return View("CreateCivil");
+                case "SuperVillains":
+                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    return View("CreateSuperVillain");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
                     return Content("Table inconnue");
@@ -223,6 +226,22 @@ namespace C_Hero.Controllers
                 return RedirectToAction("Index");
             }
             // Recharger les données nécessaires pour le formulaire en cas d'erreur de validation
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _superVillainService.CreateSuperVillainAsync(model);
+                return RedirectToAction("Index");
+            }
+
+            // Recharger les listes en cas d'erreur de validation
+            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+
             return View(model);
         }
 
