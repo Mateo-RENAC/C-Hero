@@ -63,7 +63,7 @@ namespace C_Hero.Controllers
                     return PartialView("SuperHeroesPartial", superHeroes);
                 case "Crises":
                     var crises = await _crisisService.GetAllCrisesAsync();
-                    return PartialView("CrisisPartial", crises);
+                    return PartialView("CrisesPartial", crises);
                 case "Incidents":
                     var incidents = await _incidentService.GetAllIncidentsAsync();
                     return PartialView("IncidentsPartial", incidents);
