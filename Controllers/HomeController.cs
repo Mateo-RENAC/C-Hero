@@ -86,7 +86,17 @@ namespace C_Hero.Controllers
                     ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
                     ViewBag.Missions = await _missionService.GetAllMissionsAsync();
                     ViewBag.Crises = await _crisisService.GetAllCrisesAsync();
+                    ViewBag.SuperHeroes = await _superHeroService.GetAllSuperHeroesAsync(); // Ajout de cette ligne
                     return View("CreateRapport");
+                case "Disputes":
+                    ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    return View("CreateDispute");
+                case "Incidents":
+                    ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    ViewBag.SuperVillains = await _superVillainService.GetAllSuperVillainsAsync();
+                    return View("CreateIncident");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
                     return Content("Table inconnue");
@@ -106,6 +116,35 @@ namespace C_Hero.Controllers
             ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
             ViewBag.Missions = await _missionService.GetAllMissionsAsync();
             ViewBag.Crises = await _crisisService.GetAllCrisesAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDispute(DisputeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _disputeService.CreateDisputeAsync(model);
+                return RedirectToAction("Index");
+            }
+            // Recharger les listes en cas d'erreur de validation
+            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateIncident(IncidentModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _incidentService.CreateIncidentAsync(model);
+                return RedirectToAction("Index");
+            }
+            // Recharger les listes en cas d'erreur de validation
+            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+            ViewBag.SuperVillains = await _superVillainService.GetAllSuperVillainsAsync();
             return View(model);
         }
 
