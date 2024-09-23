@@ -21,7 +21,7 @@ namespace C_Hero.Services
             return await _context.Civils.ToListAsync();
         }
 
-        public async Task<CivilModel> GetCivilByIdAsync(Guid id)
+        public async Task<CivilModel> GetCivilByIdAsync(Guid? id)
         {
             return await _context.Civils.FindAsync(id);
         }
@@ -39,7 +39,7 @@ namespace C_Hero.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCivilAsync(Guid id)
+        public async Task DeleteCivilAsync(Guid? id)
         {
             var civilModel = await _context.Civils.FindAsync(id);
             if (civilModel != null)

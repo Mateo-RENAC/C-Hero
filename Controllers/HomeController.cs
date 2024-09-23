@@ -4,6 +4,7 @@ using C_Hero.Services;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using C_Hero.Models.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace C_Hero.Controllers
 {
@@ -113,7 +114,8 @@ namespace C_Hero.Controllers
                 case "Civils":
                     return View("CreateCivil");
                 case "SuperVillains":
-                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    ViewBag.Civils = new SelectList(await _civilService.GetAllCivilsAsync(), "PK_Civil", "FullName");
+                    ViewBag.Orgas = new SelectList(await _orgaService.GetAllOrgasAsync(), "PK_Orga", "Name");
                     return View("CreateSuperVillain");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
@@ -230,20 +232,33 @@ namespace C_Hero.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model)
+        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model, List<Guid> Orgas)
         {
             if (ModelState.IsValid)
             {
+                model.Orgas = new List<OrgaModel>();
+                foreach (var orgaId in Orgas)
+                {
+                    var orga = await _orgaService.GetOrgaByIdAsync(orgaId);
+                    if (orga != null)
+                    {
+                        model.Orgas.Add(orga);
+                    }
+                    var civil = await _civilService.GetCivilByIdAsync(model.IdentityId);
+                    if (civil != null)
+                    {
+                        model.Identity = civil;
+                    }
+                }
                 await _superVillainService.CreateSuperVillainAsync(model);
                 return RedirectToAction("Index");
             }
-
-            // Recharger les listes en cas d'erreur de validation
-            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
-            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
-
+            ViewBag.Civils = new SelectList(await _civilService.GetAllCivilsAsync(), "PK_Civil", "FullName");
+            ViewBag.Orgas = new SelectList(await _orgaService.GetAllOrgasAsync(), "PK_Orga", "Name");
             return View(model);
         }
+
+
 
 
     }

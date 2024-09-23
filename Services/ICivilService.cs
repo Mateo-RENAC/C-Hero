@@ -12,5 +12,6 @@ namespace C_Hero.Services
         Task<CivilModel> CreateCivilAsync(CivilModel civilModel);
         Task UpdateCivilAsync(CivilModel civilModel);
         Task DeleteCivilAsync(Guid id);
+        Task<CivilModel?> GetCivilByIdAsync(Guid? identityId);
     }
 }

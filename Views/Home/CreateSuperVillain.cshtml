@@ -1,10 +1,10 @@
 ﻿@model C_Hero.Models.Entities.SuperVillainModel
 
 @{
-    ViewData["Title"] = "Créer un super Villain";
+    ViewData["Title"] = "Créer un SuperVillain";
 }
 
-<h2>Create Super Villain</h2>
+<h2>Créer un SuperVillain</h2>
 
 <form asp-action="CreateSuperVillain" method="post">
     <div class="form-group">
@@ -29,21 +29,30 @@
     </div>
     <div class="form-group">
         <label asp-for="Comment" class="control-label"></label>
-        <input asp-for="Comment" class="form-control" />
+        <textarea asp-for="Comment" class="form-control"></textarea>
         <span asp-validation-for="Comment" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="IdentityId" class="control-label"></label>
-        <select asp-for="IdentityId" class="form-control" asp-items="@(new SelectList(ViewBag.Civils, "PK_Civil", "FullName"))"></select>
-        <span asp-validation-for="IdentityId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Orgas" class="control-label"></label>
-        <select asp-for="Orgas" class="form-control" asp-items="@(new SelectList(ViewBag.Organisations, "PK_Orga", "Name"))" multiple="multiple"></select>
+        <select asp-for="Orgas" class="form-control" asp-items="@(new SelectList(ViewBag.Orgas, "PK_Orga", "Name"))" multiple>
+            <option value="">Sélectionnez des organisations</option>
+        </select>
         <span asp-validation-for="Orgas" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <label asp-for="IdentityId" class="control-label"></label>
+        <select asp-for="IdentityId" class="form-control" asp-items="@(new SelectList(ViewBag.Civils, "PK_Civil", "FullName"))">
+            <option value="">Sélectionnez une identité civile</option>
+        </select>
+        <span asp-validation-for="IdentityId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Créer" class="btn btn-primary" />
     </div>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
