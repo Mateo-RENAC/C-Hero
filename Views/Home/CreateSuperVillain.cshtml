@@ -1,0 +1,39 @@
+﻿@model C_Hero.Models.Entities.SuperVillainModel
+
+@{
+    ViewBag.Title = "Create Super Villain";
+}
+
+<h2>Create Super Villain</h2>
+
+<form asp-action="CreateSuperVillain" method="post">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+    <div>
+        <label asp-for="Power"></label>
+        <input asp-for="Power" />
+    </div>
+    <div>
+        <label asp-for="Weakness"></label>
+        <input asp-for="Weakness" />
+    </div>
+    <div>
+        <label asp-for="Picture"></label>
+        <input asp-for="Picture" />
+    </div>
+    <div>
+        <label asp-for="Comment"></label>
+        <input asp-for="Comment" />
+    </div>
+    <div>
+        <label asp-for="IdentityId">Secret Identity</label>
+        <select asp-for="IdentityId" asp-items="@(new SelectList(ViewBag.Civils, "PK_Civil", "FirstName"))"></select>
+    </div>
+    <div>
+        <label>Organisations</label>
+        <select asp-for="Orgas" asp-items="@(new SelectList(ViewBag.Organisations, "PK_Orga", "Name"))" multiple></select>
+    </div>
+    <button type="submit">Create</button>
+</form>

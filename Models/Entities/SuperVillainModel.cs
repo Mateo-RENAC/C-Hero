@@ -1,6 +1,4 @@
-﻿using Azure.Identity;
-
-namespace C_Hero.Models.Entities
+﻿namespace C_Hero.Models.Entities
 {
     public class SuperVillainModel
     {
@@ -17,15 +15,14 @@ namespace C_Hero.Models.Entities
         public Guid? IdentityId { get; set; }
         public CivilModel? Identity { get; set; }
 
-        //Propriété pour la relation avec OrgaModel et IncidentModel
+        // Propriété pour la relation avec OrgaModel
         public ICollection<OrgaModel> Orgas { get; set; } = new List<OrgaModel>();
-        public ICollection<IncidentModel> Incidents { get; set; } = new List<IncidentModel>();
 
         // Constructeur par défaut
         public SuperVillainModel()
         {
             PK_SuperV = Guid.NewGuid();
-            Nb_Incident_Caused= 0;
+            Nb_Incident_Caused = 0;
             Score = 0;
         }
 

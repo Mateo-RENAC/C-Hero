@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using C_Hero.Models.Entities;
 
 namespace C_Hero.Data
@@ -20,8 +19,6 @@ namespace C_Hero.Data
         public DbSet<RapportModel> Rapports { get; set; }
         public DbSet<CrisisModel> Crisises { get; set; }
         public DbSet<DisputeModel> Disputes { get; set; }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,19 +44,19 @@ namespace C_Hero.Data
             modelBuilder.Entity<RapportModel>()
                 .HasKey(r => r.FK_Rapport);
 
-            //Configuration de la clé primaire pour SuperHeroModel
+            // Configuration de la clé primaire pour SuperHeroModel
             modelBuilder.Entity<SuperHeroModel>()
                 .HasKey(s => s.PK_SuperH);
 
-            //Configuration de la clé primaire pour SuperVillainModel
+            // Configuration de la clé primaire pour SuperVillainModel
             modelBuilder.Entity<SuperVillainModel>()
                 .HasKey(s => s.PK_SuperV);
 
-            //Configuration de la clée primaire pour CrisisModel
+            // Configuration de la clé primaire pour CrisisModel
             modelBuilder.Entity<CrisisModel>()
                 .HasKey(c => c.PK_Crisis);
 
-            //Configuration de la clée primaire pour DisputeModel
+            // Configuration de la clé primaire pour DisputeModel
             modelBuilder.Entity<DisputeModel>()
                 .HasKey(d => d.PK_Dispute);
 
@@ -86,12 +83,6 @@ namespace C_Hero.Data
                 .HasMany(o => o.Villains)
                 .WithMany(v => v.Orgas)
                 .UsingEntity(j => j.ToTable("OrgaVillains"));
-
-            // Configuration de la relation many-to-many pour Villains dans IncidentModel
-            modelBuilder.Entity<IncidentModel>()
-                .HasMany(i => i.Villains)
-                .WithMany(v => v.Incidents)
-                .UsingEntity(j => j.ToTable("IncidentVillains"));
         }
     }
 }

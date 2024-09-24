@@ -113,6 +113,10 @@ namespace C_Hero.Controllers
                 case "Civils":
                     ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
                     return View("CreateCivil");
+                case "Villains":
+                    ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
+                    ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+                    return View("CreateSuperVillain");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
                     return Content("Table inconnue");
@@ -237,7 +241,27 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model, List<Guid> Orgas, List<Guid> Incidents)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Orgas = new List<OrgaModel>();
+                foreach (var orgaId in Orgas)
+                {
+                    var orga = await _orgaService.GetOrgaByIdAsync(orgaId);
+                    if (orga != null)
+                    {
+                        model.Orgas.Add(orga);
+                    }
+                }
+                await _superVillainService.CreateSuperVillainAsync(model);
+                return RedirectToAction("Index");
+            }
+            ViewBag.Civils = await _civilService.GetAllCivilsAsync();
+            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+            return View(model);
+        }
 
     }
 }
