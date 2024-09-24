@@ -242,36 +242,5 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model, List<Guid> Orgas)
-        {
-            if (ModelState.IsValid)
-            {
-                model.Orgas = new List<OrgaModel>();
-                foreach (var orgaId in Orgas)
-                {
-                    var orga = await _orgaService.GetOrgaByIdAsync(orgaId);
-                    if (orga != null)
-                    {
-                        model.Orgas.Add(orga);
-                    }
-                    var civil = await _civilService.GetCivilByIdAsync(model.IdentityId);
-                    if (civil != null)
-                    {
-                        model.Identity = civil;
-                    }
-                }
-                await _superVillainService.CreateSuperVillainAsync(model);
-                return RedirectToAction("Index");
-            }
-            ViewBag.Civils = new SelectList(await _civilService.GetAllCivilsAsync(), "PK_Civil", "FullName");
-            ViewBag.Orgas = new SelectList(await _orgaService.GetAllOrgasAsync(), "PK_Orga", "Name");
-            return View(model);
-        }
-
-
-
-
-
     }
 }
