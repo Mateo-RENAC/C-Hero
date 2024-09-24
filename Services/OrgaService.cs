@@ -23,7 +23,7 @@ namespace C_Hero.Services
 
         public async Task<OrgaModel> GetOrgaByIdAsync(Guid id)
         {
-            return await _context.Orgas.FindAsync(id);
+            return await _context.Orgas.FindAsync(id) ?? throw new ArgumentNullException(nameof(id));
         }
 
         public async Task<OrgaModel> CreateOrgaAsync(OrgaModel orgaModel)
