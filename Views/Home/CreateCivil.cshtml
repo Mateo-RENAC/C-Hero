@@ -53,6 +53,10 @@
         <span asp-validation-for="Comment" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Orgas" class="control-label">Organisations</label>
+        <select asp-for="Orgas" class="form-control" asp-items="@(new MultiSelectList(ViewBag.Orgas, "PK_Orga", "Name"))" multiple="multiple"></select>
+    </div>
+    <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
@@ -62,4 +66,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-

@@ -111,6 +111,7 @@ namespace C_Hero.Controllers
                     ViewBag.Rapports = await _rapportService.GetAllRapportsAsync();
                     return View("CreateCrisis");
                 case "Civils":
+                    ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
                     return View("CreateCivil");
                 // Ajoutez d'autres cas pour les autres tables
                 default:
@@ -215,16 +216,27 @@ namespace C_Hero.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCivil(CivilModel model)
+        public async Task<IActionResult> CreateCivil(CivilModel model, List<Guid> Orgas)
         {
             if (ModelState.IsValid)
             {
+                model.Orgas = new List<OrgaModel>();
+                foreach (var orgaId in Orgas)
+                {
+                    var orga = await _orgaService.GetOrgaByIdAsync(orgaId);
+                    if (orga != null)
+                    {
+                        model.Orgas.Add(orga);
+                    }
+                }
                 await _civilService.CreateCivilAsync(model);
                 return RedirectToAction("Index");
             }
             // Recharger les données nécessaires pour le formulaire en cas d'erreur de validation
+            ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
             return View(model);
         }
+
 
 
     }
