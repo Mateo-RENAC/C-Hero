@@ -12,10 +12,10 @@
         public string? Comment { get; set; }
         public string? Picture { get; set; }
         public int Nb_Incident_Declared { get; set; }
-        public ICollection<CivilModel> Members { get; set; }
-        public ICollection<CivilModel> Dirigeant { get; set; }
-        public ICollection<SuperHeroModel> Heroes { get; set; }
-        public ICollection<SuperVillainModel> Villains { get; set; }
+        public ICollection<CivilModel> Members { get; set; } = new List<CivilModel>();
+        public ICollection<CivilModel> Dirigeant { get; set; } = new List<CivilModel>();
+        public ICollection<SuperHeroModel> Heroes { get; set; } = new List<SuperHeroModel>();
+        public ICollection<SuperVillainModel> Villains { get; set; } = new List<SuperVillainModel>();
 
         public OrgaModel()
         {

@@ -18,8 +18,8 @@
         public string? Picture { get; set; }
         public int Nb_Incident_Declared { get; set; }
         public int Nb_Time_Being_Victim { get; set; }
-        public ICollection<OrgaModel> Orgas { get; set; }
-        public ICollection<OrgaModel> DirigeantOrgas { get; set; }
+        public ICollection<OrgaModel> Orgas { get; set; } = new List<OrgaModel>();
+        public ICollection<OrgaModel> DirigeantOrgas { get; set; } = new List<OrgaModel>();
 
         public CivilModel()
         {

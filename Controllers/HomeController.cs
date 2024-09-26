@@ -244,8 +244,14 @@ namespace C_Hero.Controllers
         [HttpGet]
         public IActionResult CreateSuperVillain()
         {
-            ViewBag.Civils = _civilService.GetAllCivilsAsync();
-            ViewBag.Orgas = _orgaService.GetAllOrgasAsync();
+            var civils = _civilService.GetAllCivilsAsync();
+            var orgas = _orgaService.GetAllOrgasAsync();
+            if (civils == null || orgas == null)
+            {
+                return BadRequest("Erreur lors de la récupération des données civils ou orga");
+            }
+            ViewBag.Civils = civils;
+            ViewBag.Orgas = orgas;
             return View();
         }
 

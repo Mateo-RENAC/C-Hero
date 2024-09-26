@@ -18,7 +18,7 @@ namespace C_Hero.Services
 
         public async Task<IEnumerable<OrgaModel>> GetAllOrgasAsync()
         {
-            return await _context.Orgas.ToListAsync();
+            return await _context.Orgas.ToListAsync() ?? new List<OrgaModel>();
         }
 
         public async Task<OrgaModel> GetOrgaByIdAsync(Guid id)

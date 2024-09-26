@@ -18,7 +18,7 @@ namespace C_Hero.Services
 
         public async Task<IEnumerable<CivilModel>> GetAllCivilsAsync()
         {
-            return await _context.Civils.ToListAsync();
+            return await _context.Civils.ToListAsync() ?? new List<CivilModel>();
         }
 
         public async Task<CivilModel> GetCivilByIdAsync(Guid id)
