@@ -241,6 +241,9 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
+
+
+        //Enfaite SuperVillain Fonctionne, Il faut créer une Orga et un Civil avant de créer un SuperVillain
         [HttpGet]
         public IActionResult CreateSuperVillain()
         {
