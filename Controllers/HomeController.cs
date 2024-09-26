@@ -113,7 +113,7 @@ namespace C_Hero.Controllers
                 case "Civils":
                     ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
                     return View("CreateCivil");
-                case "Villains":
+                case "SuperVillains":
                     ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
                     ViewBag.Civils = await _civilService.GetAllCivilsAsync();
                     return View("CreateSuperVillain");
@@ -241,8 +241,16 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult CreateSuperVillain()
+        {
+            ViewBag.Civils = _civilService.GetAllCivilsAsync();
+            ViewBag.Orgas = _orgaService.GetAllOrgasAsync();
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model, List<Guid> Orgas, List<Guid> Incidents)
+        public async Task<IActionResult> CreateSuperVillain(SuperVillainModel model, List<Guid> Orgas)
         {
             if (ModelState.IsValid)
             {
