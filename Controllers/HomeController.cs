@@ -139,18 +139,38 @@ namespace C_Hero.Controllers
             return View(model);
         }
 
+
+
+        [HttpGet]
+        public async Task<IActionResult> CreateDispute()
+        {
+            var orgas = await _orgaService.GetAllOrgasAsync();
+            var civils = await _civilService.GetAllCivilsAsync();
+
+            if (orgas == null || civils == null)
+            {
+                return BadRequest("Erreur lors de la récupération des données orgas ou civils");
+            }
+
+            ViewBag.Orgas = orgas;
+            ViewBag.Civils = civils;
+
+            return View("CreateDispute");
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateDispute(DisputeModel model)
         {
             if (ModelState.IsValid)
             {
                 await _disputeService.CreateDisputeAsync(model);
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
-            // Recharger les listes en cas d'erreur de validation
-            ViewBag.Organisations = await _orgaService.GetAllOrgasAsync();
+
+            ViewBag.Orgas = await _orgaService.GetAllOrgasAsync();
             ViewBag.Civils = await _civilService.GetAllCivilsAsync();
-            return View(model);
+
+            return View("CreateDispute", model);
         }
 
         [HttpPost]

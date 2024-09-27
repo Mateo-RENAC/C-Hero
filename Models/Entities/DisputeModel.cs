@@ -4,7 +4,7 @@
     {
         public Guid PK_Dispute { get; set; }
         public DateTime Creation { get; set; }
-        public string Type { get; set; }
+        public required string Type { get; set; }
         public string? Comment { get; set; }
         public float? Cost { get; set; }
         public string? Photos { get; set; }
